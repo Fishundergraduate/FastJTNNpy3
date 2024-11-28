@@ -17,11 +17,14 @@ def get_mol(smiles):
     mol = Chem.MolFromSmiles(smiles)
     if mol is None: 
         return None
-    Chem.Kekulize(mol)
+    Chem.Kekulize(mol, clearAromaticFlags=True)
     return mol
 
 def get_smiles(mol):
-    return Chem.MolToSmiles(mol, kekuleSmiles=True)
+    try:
+        return Chem.MolToSmiles(mol, kekuleSmiles=True)
+    except:
+        raise ValueError("SMILES ERROR", Chem.MolToSmiles(mol))
 
 def decode_stereo(smiles2D):
     mol = Chem.MolFromSmiles(smiles2D)
@@ -66,10 +69,14 @@ def copy_edit_mol(mol):
     return new_mol
 
 def get_clique_mol(mol, atoms):
-    smiles = Chem.MolFragmentToSmiles(mol, atoms, kekuleSmiles=True)
+    try:
+        smiles = Chem.MolFragmentToSmiles(mol, atoms, kekuleSmiles=True)
+    except:
+        raise ValueError("kekulization failed", Chem.MolToSmiles(mol))
     new_mol = Chem.MolFromSmiles(smiles, sanitize=False)
     new_mol = copy_edit_mol(new_mol).GetMol()
     new_mol = sanitize(new_mol) #We assume this is not None
+    assert new_mol is not None, (Chem.MolToSmiles(mol), atoms)
     return new_mol
 
 def tree_decomp(mol):

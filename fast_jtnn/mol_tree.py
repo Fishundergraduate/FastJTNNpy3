@@ -4,6 +4,7 @@ from .chemutils import get_clique_mol, tree_decomp, get_mol, get_smiles, set_ato
 from .vocab import *
 import sys
 import argparse
+from tqdm.contrib import tenumerate
 
 class MolTreeNode(object):
 
@@ -117,7 +118,7 @@ def dfs(node, fa_idx):
 def main_mol_tree(oinput, ovocab, MAX_TREE_WIDTH=50):
     cset = set()
     with open(oinput, 'r') as input_file:
-        for i, line in enumerate(input_file.readlines()):
+        for i, line in tenumerate(input_file.readlines()):
             smiles = line.strip().split()[0]
             alert = False
             mol = MolTree(smiles)
