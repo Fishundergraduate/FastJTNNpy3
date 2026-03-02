@@ -40,5 +40,5 @@ This repository contains the following directories:
 * `Old/molvae/jtnn/` contains codes for model formulation. Please read `Old/molvae/README.md` for training our VAE model.
 
 # Contact
-Takamasa Suzuki (Twitter: ![xeT1T](http://x.com/xet1t) )
+Takamasa Suzuki (Twitter: [xeT1T](http://x.com/xet1t) )
 
